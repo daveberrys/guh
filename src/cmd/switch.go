@@ -14,7 +14,7 @@ func init() {
 
 var switchCmd = &cobra.Command{
 	Use:   "switch",
-	Short: "Switch context, branches, or accounts",
+	Short: "Switch branches or accounts",
 }
 
 var switchBranchCmd = &cobra.Command{

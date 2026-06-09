@@ -2,7 +2,9 @@ package cmd
 
 import (
 	"fmt"
-
+	"os/exec"
+	"os"
+	
 	"github.com/spf13/cobra"
 )
 
@@ -15,10 +17,14 @@ var pullCmd = &cobra.Command{
 	Short: "Pull updates from a source",
 	Args:  cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		source := "default"
-		if len(args) > 0 {
-			source = args[0]
-		}
-		fmt.Printf("Pulling data from: %s...\n", source)
-	},
+    
+    out, err := exec.Command("git", "fetch").CombinedOutput()
+    if err != nil { fmt.Fprintf(os.Stderr, "error: %s\n", err) }
+
+    out, err = exec.Command("git", "pull").CombinedOutput()
+    if err != nil { fmt.Fprintf(os.Stderr, "error: %s\n", err) }
+    
+    fmt.Print(string(out))
+},
+
 }
