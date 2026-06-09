@@ -6,17 +6,14 @@ import (
 )
 
 func init() {
-	rootCmd.AddCommand(pullCmd)
+	rootCmd.AddCommand(stashCmd)
 }
 
-var pullCmd = &cobra.Command{
-	Use:   "pull",
-	Short: "Fetch and pull updates",
+var stashCmd = &cobra.Command{
+	Use:   "stash",
+	Short: "Stash current changes",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return utils.RunGitSequence(
-			[]string{"fetch"},
-			[]string{"pull"},
-		)
+		return utils.RunGitSequence([]string{"stash"})
 	},
 }
