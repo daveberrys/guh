@@ -14,8 +14,8 @@ var commitCmd = &cobra.Command{
 	Short: "Add current changes and commit",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		utils.RunGitSequence([]string{"commit", "-m", args[0]})
 		utils.RunGitSequence([]string{"add", "."})
+		utils.RunGitSequence([]string{"commit", "-m", args[0]})
 		return nil
 	},
 }
