@@ -18,7 +18,7 @@ var commitCmd = &cobra.Command{
 	Args: cobra.RangeArgs(0, 3),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if len(args) == 0 {
-			return utils.RunGit("status", "--short")
+			return utils.RunGitSequence(false, []string{"status", "--short"})
 		}
 
 		if len(args) < 2 {
@@ -37,18 +37,18 @@ var commitCmd = &cobra.Command{
 		}
 
 		fmt.Println("Edited files:")
-		if err := utils.RunGit("status", "--short"); err != nil {
+		if err := utils.RunGitSequence(false, []string{"status", "--short"}); err != nil {
 			return err
 		}
 		fmt.Println()
 
-		utils.RunGitSequence(addArgs)
+		utils.RunGitSequence(false, addArgs)
 
 		commitArgs := []string{"commit", "-m", args[1]}
 		if len(args) == 3 {
 			commitArgs = append(commitArgs, "-m", args[2])
 		}
-		utils.RunGitSequence(commitArgs)
+		utils.RunGitSequence(false, commitArgs)
 		return nil
 	},
 }

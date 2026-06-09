@@ -24,7 +24,7 @@ var createBranchCmd = &cobra.Command{
 	Short: "Create and switch to a branch",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return utils.RunGitSequence([]string{"switch", "-c", args[0]})
+		return utils.RunGitSequence(false, []string{"switch", "-c", args[0]})
 	},
 }
 

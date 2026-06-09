@@ -14,6 +14,6 @@ var pushCmd = &cobra.Command{
 	Short: "Add current changes and push",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return utils.RunGitSequence([]string{"push"})
+		return utils.RunGitSequence(false, []string{"push"})
 	},
 }

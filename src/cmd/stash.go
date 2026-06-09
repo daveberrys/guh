@@ -14,6 +14,6 @@ var stashCmd = &cobra.Command{
 	Short: "Stash current changes",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return utils.RunGitSequence([]string{"stash"})
+		return utils.RunGitSequence(false, []string{"stash"})
 	},
 }

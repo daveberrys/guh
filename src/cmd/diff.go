@@ -14,6 +14,6 @@ var diffCmd = &cobra.Command{
 	Short: "Show working tree changes",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return utils.RunGitSequence([]string{"diff"})
+		return utils.RunGitSequence(false, []string{"diff"})
 	},
 }

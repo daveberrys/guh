@@ -44,7 +44,7 @@ func performAccountSwitch(username string) error {
 		return err
 	}
 
-	if err := utils.RunGitSequence(
+	if err := utils.RunGitSequence(false,
 		[]string{"config", "--global", "user.name", account.Username},
 		[]string{"config", "--global", "user.email", account.Email},
 	); err != nil {
@@ -66,5 +66,5 @@ func performAccountSwitch(username string) error {
 }
 
 func performBranchSwitch(branchName string) error {
-	return utils.RunGitSequence([]string{"switch", branchName})
+	return utils.RunGitSequence(false, []string{"switch", branchName})
 }

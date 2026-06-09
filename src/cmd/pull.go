@@ -14,7 +14,7 @@ var pullCmd = &cobra.Command{
 	Short: "Fetch and pull updates",
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return utils.RunGitSequence(
+		return utils.RunGitSequence(false,
 			[]string{"fetch"},
 			[]string{"pull"},
 		)
