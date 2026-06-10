@@ -37,9 +37,7 @@ var commitCmd = &cobra.Command{
 		}
 
 		fmt.Println("Edited files:")
-		if err := utils.RunGitSequence(false, []string{"status", "--short"}); err != nil {
-			return err
-		}
+		if err := utils.RunGitSequence(false, []string{"status", "--short"}); err != nil { return err }
 		fmt.Println()
 
 		utils.RunGitSequence(false, addArgs)

@@ -42,9 +42,7 @@ var createAccountCmd = &cobra.Command{
 			return fmt.Errorf("username, email, and classicToken are required")
 		}
 
-		if err := utils.UpsertAccount(account); err != nil {
-			return err
-		}
+		if err := utils.UpsertAccount(account); err != nil { return err }
 
 		fmt.Printf("Saved account: %s\n", account.Username)
 		return nil
