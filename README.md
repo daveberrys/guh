@@ -21,6 +21,7 @@ You can download the latest nightly build from the [GitHub Actions](https://gith
 ```bash
 git clone https://github.com/daveberrys/guh.git
 cd guh
+go mod download
 bash install_guh.sh
 ```
 
