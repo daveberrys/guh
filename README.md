@@ -6,5 +6,32 @@ This tool is a simple CLI tool that wraps the git CLI (from `os/exec`) and provi
 ## How to use it?
 Check out the [documentation](DOCS.md) for more information. That has all the CLI commands and usage instructions.
 
+## Installation
+### Nightly Downloads
+You can download the latest nightly build from the [GitHub Actions](https://github.com/daveberrys/guh/actions) page. Or if you're lazy, here's the nightly.link
+- **Windows**: [nightly.link](https://nightly.link/daveberrys/guh/workflows/compile.yaml/main/GUH-Windows.zip)
+- **Linux**: [nightly.link](https://nightly.link/daveberrys/guh/workflows/compile.yaml/main/GUH-Linux.zip)
+- **macOS**: [nightly.link](https://nightly.link/daveberrys/guh/workflows/compile.yaml/main/GUH-macOS.zip)
+
+### Build from source
+#### Requirements
+- [Go 1.2x or higher](https://go.dev/dl/)
+
+#### Unix:
+```bash
+git clone https://github.com/daveberrys/guh.git
+cd guh
+bash install_guh.sh
+```
+
+#### Windows:
+```powershell
+git clone https://github.com/daveberrys/guh.git
+cd guh
+go mod download
+go mod tidy
+go build
+```
+
 # LICENSE
 [MIT License](LICENSE)

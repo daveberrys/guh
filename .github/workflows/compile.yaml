@@ -17,7 +17,7 @@ jobs:
                   artifact-name: GUH-Linux
                 - os: windows-latest
                   os-name: Windows
-                  artifact-name: GUH-Windows
+                  artifact-name: GUH-Windows.exe
                 - os: macos-latest
                   os-name: macOS
                   artifact-name: GUH-macOS
