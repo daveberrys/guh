@@ -9,7 +9,7 @@ Check out the [documentation](DOCS.md) for more information. That has all the CL
 ## Installation
 ### Nightly Downloads
 You can download the latest nightly build from the [GitHub Actions](https://github.com/daveberrys/guh/actions) page. Or if you're lazy, here's the nightly.link
-- **Windows**: [nightly.link](https://nightly.link/daveberrys/guh/workflows/compile.yaml/main/GUH-Windows.zip)
+- **Windows**: [nightly.link](https://nightly.link/daveberrys/guh/workflows/compile.yaml/main/GUH-Windows.exe.zip)
 - **Linux**: [nightly.link](https://nightly.link/daveberrys/guh/workflows/compile.yaml/main/GUH-Linux.zip)
 - **macOS**: [nightly.link](https://nightly.link/daveberrys/guh/workflows/compile.yaml/main/GUH-macOS.zip)
 
