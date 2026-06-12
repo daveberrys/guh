@@ -1,4 +1,4 @@
-package cmd
+package createcmd
 
 import (
 	"fmt"
@@ -8,31 +8,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func init() {
-	rootCmd.AddCommand(createCmd)
-	createCmd.AddCommand(createBranchCmd)
-	createCmd.AddCommand(createAccountCmd)
-}
-
-var createCmd = &cobra.Command{
-	Use:   "create",
-	Short: "Create branches or accounts",
-}
-
-var createBranchCmd = &cobra.Command{
-	Use:   "branch [branch]",
-	Short: "Create and switch to a branch",
-	Args:  cobra.ExactArgs(1),
-	RunE: func(cmd *cobra.Command, args []string) error {
-		return utils.RunGitSequence(false, []string{"switch", "-c", args[0]})
-	},
-}
-
 var createAccountCmd = &cobra.Command{
 	Use:   "account [username] [email] [classicToken]",
 	Short: "Create or update an account",
 	Args:  cobra.ExactArgs(3),
-	RunE: func(cmd *cobra.Command, args []string) error {
+	RunE: func(c *cobra.Command, args []string) error {
 		account := utils.Account{
 			Username:     args[0],
 			Email:        args[1],
