@@ -9,17 +9,18 @@ import (
 )
 
 var createAccountCmd = &cobra.Command{
-	Use:   "account [username] [email] [classicToken]",
+	Use:   "account [username] [email] [classicToken] [platform]",
 	Short: "Create or update an account",
-	Args:  cobra.ExactArgs(3),
+	Args:  cobra.ExactArgs(4),
 	RunE: func(c *cobra.Command, args []string) error {
 		account := utils.Account{
 			Username:     args[0],
 			Email:        args[1],
 			ClassicToken: args[2],
+			Platform:     args[3],
 		}
-		if strings.TrimSpace(account.Username) == "" || strings.TrimSpace(account.Email) == "" || strings.TrimSpace(account.ClassicToken) == "" {
-			return fmt.Errorf("username, email, and classicToken are required")
+		if strings.TrimSpace(account.Username) == "" || strings.TrimSpace(account.Email) == "" || strings.TrimSpace(account.ClassicToken) == "" || strings.TrimSpace(account.Platform) == "" {
+			return fmt.Errorf("username, email, classicToken, platform are required")
 		}
 
 		if err := utils.UpsertAccount(account); err != nil { return err }

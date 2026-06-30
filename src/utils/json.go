@@ -15,6 +15,7 @@ type Account struct {
 	Username     string `json:"username"`
 	Email        string `json:"email"`
 	ClassicToken string `json:"classic_token"`
+	Platform     string `json:"platform"`
 }
 
 func AccountsFilePath() (string, error) {
