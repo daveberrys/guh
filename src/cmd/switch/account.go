@@ -20,7 +20,7 @@ func performAccountSwitch(username string) error {
 	homeDir, err := os.UserHomeDir()
 	if err != nil { return err }
 
-	credentials := fmt.Sprintf("https://%s:%s@github.com\n", account.Username, account.ClassicToken)
+	credentials := fmt.Sprintf("https://%s:%s@%s\n", account.Username, account.ClassicToken, account.Platform)
 	if err := os.WriteFile(filepath.Join(homeDir, ".git-credentials"), []byte(credentials), 0600); err != nil { return err }
 
 	fmt.Printf("Switched to account: %s\n", account.Username)
