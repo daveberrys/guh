@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"bytes"
 	"fmt"
 	"io"
 	"os"
@@ -8,23 +9,28 @@ import (
 	"strings"
 )
 
-func RunGit(hideOutput bool, args ...string) error {
+func RunGit(hideOutput bool, args ...string) (string, error) {
 	gitCmd := exec.Command("git", args...)
 	gitCmd.Stdin = os.Stdin
+
+	var stdout bytes.Buffer
+	var stderr bytes.Buffer
+
 	if hideOutput {
-		gitCmd.Stdout = io.Discard
-		gitCmd.Stderr = io.Discard
+		gitCmd.Stdout = &stdout
+		gitCmd.Stderr = &stderr
 	} else {
-		gitCmd.Stdout = os.Stdout
-		gitCmd.Stderr = os.Stderr
+		gitCmd.Stdout = io.MultiWriter(os.Stdout, &stdout)
+		gitCmd.Stderr = io.MultiWriter(os.Stderr, &stderr)
 	}
 
-	return gitCmd.Run()
+	err := gitCmd.Run()
+	return strings.TrimRight(stdout.String(), "\n"), err
 }
 
 func RunGitSequence(hideOutput bool, commands ...[]string) error {
 	for _, commandArgs := range commands {
-		if err := RunGit(hideOutput, commandArgs...); err != nil {
+		if _, err := RunGit(hideOutput, commandArgs...); err != nil {
 			return fmt.Errorf("git %s failed: %w", strings.Join(commandArgs, " "), err)
 		}
 	}
