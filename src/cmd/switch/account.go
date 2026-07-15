@@ -18,6 +18,7 @@ var switchAccountCmd = &cobra.Command{
 		if err != nil { return err }
 		
 		if err := utils.RunGitSequence(false,
+		    []string{"config", "--global", "credential.helper", "store"},
 			[]string{"config", "--global", "user.name", account.Username},
 			[]string{"config", "--global", "user.email", account.Email},
 		); err != nil { return err }
