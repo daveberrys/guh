@@ -5,9 +5,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func init() {
-	rootCmd.AddCommand(diffCmd)
-}
+func init() { rootCmd.AddCommand(diffCmd) }
 
 var diffCmd = &cobra.Command{
 	Use:   "diff",
