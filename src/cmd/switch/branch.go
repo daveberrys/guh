@@ -12,7 +12,7 @@ var switchBranchCmd = &cobra.Command{
 	Short: "Switch to a specific branch",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(c *cobra.Command, args []string) error {
-	    utils.RunGitequence(false, []string{"switch", args[0]})
+	    utils.RunGitSequence(false, []string{"switch", args[0]})
 	    fmt.Printf("Switched to branch: %s\n", args[0])
 	    return nil
 	},
