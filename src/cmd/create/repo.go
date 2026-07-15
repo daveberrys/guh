@@ -12,8 +12,16 @@ var linkRepoCmd = &cobra.Command{
 	Short: "Link a repository",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(c *cobra.Command, args []string) error {
-		utils.RunGitSequence(false, []string{"remote", "set-url", "origin", args[0]})
-		fmt.Printf("Linked repository to: %s\n", args[0])
-		return nil
+		switch args[0] {
+		    case "":
+		        return fmt.Errorf("repository URL cannot be empty")
+		    case "what":
+		        utils.RunGit(false, "remote", "get-url", "origin")
+		        return nil
+		    default:
+		        utils.RunGitSequence(false, []string{"remote", "set-url", "origin", args[0]})
+		        fmt.Printf("Linked repository to: %s\n", args[0])
+		        return nil
+		}
 	},
 }
