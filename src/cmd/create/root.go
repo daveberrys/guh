@@ -9,6 +9,7 @@ func init() {
 	cmd.RootCmd.AddCommand(createCmd)
 	createCmd.AddCommand(createBranchCmd)
 	createCmd.AddCommand(createAccountCmd)
+	createCmd.AddCommand(linkRepoCmd)
 }
 
 var createCmd = &cobra.Command{
