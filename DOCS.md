@@ -10,6 +10,34 @@ guh
 
 ---
 
+## `browse`
+
+Open the repository's remote origin in the default browser.
+
+```
+guh browse
+```
+
+Equivalent to opening the repo URL (without `.git` suffix) in a browser.
+
+### `issues`
+
+Open the issues page.
+
+```
+guh browse issues
+```
+
+### `pr`
+
+Open the pull requests page.
+
+```
+guh browse pr
+```
+
+---
+
 ## `commit`
 
 Add files and commit changes. Shows `git status --short` before committing.
@@ -34,6 +62,7 @@ guh commit '["file1"]' "message" "description"   # commit with message + descrip
 ---
 
 ## `create`
+
 ### `branch`
 
 Create and switch to a new branch.
@@ -46,13 +75,22 @@ Equivalent to `git switch -c <branch>`.
 
 ### `account`
 
-Save a GitHub account with username, email, and classic token.
+Save a GitHub account with username, email, classic token, and platform.
 
 ```
-guh create account <username> <email> <classicToken>
+guh create account <username> <email> <classicToken> <platform>
 ```
 
-Credentials are stored in the user config directory under `dev.pages.codedave.guh/accounts.json`. All three values are required and must be non-empty.
+Credentials are stored in the user config directory under `dev.pages.codedave.guh/accounts.json`. All four values are required and must be non-empty. `platform` is the Git provider domain (e.g. `github.com`).
+
+### `repo`
+
+Link or view the repository remote origin.
+
+```
+guh create repo <url>     # set origin URL
+guh create repo what      # show current origin URL
+```
 
 ---
 
@@ -65,6 +103,18 @@ guh diff
 ```
 
 Equivalent to `git diff`.
+
+---
+
+## `init`
+
+Initialize a new Git repository in the current directory.
+
+```
+guh init
+```
+
+Equivalent to `git init`.
 
 ---
 
@@ -105,6 +155,7 @@ Equivalent to `git stash`.
 ---
 
 ## `switch`
+
 ### `branch`
 
 Switch to an existing branch.
@@ -124,3 +175,28 @@ guh switch account <username>
 ```
 
 Updates `user.name`, `user.email` in global git config, and overwrites `~/.git-credentials` with the stored token. The account must have been created with `guh create account` first.
+
+---
+
+## `undo`
+
+Undo local commits using `git reset`.
+
+```
+guh undo <commits> [flavour]
+```
+
+**Arguments**
+
+| # | Name | Required | Description |
+|---|------|----------|-------------|
+| 1 | commits | yes | Number of commits to go back (e.g. `1`) |
+| 2 | flavour | no | Reset mode: `hard`, `mixed` (default: `soft`) |
+
+Examples:
+
+```
+guh undo 1             # git reset --soft HEAD~1
+guh undo 2 hard        # git reset --hard HEAD~2
+guh undo 1 mixed       # git reset --mixed HEAD~1
+```
