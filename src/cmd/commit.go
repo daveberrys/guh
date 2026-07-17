@@ -8,9 +8,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func init() {
-	rootCmd.AddCommand(commitCmd)
-}
+func init() { rootCmd.AddCommand(commitCmd) }
 
 var commitCmd = &cobra.Command{
 	Use:   "commit [files] [message] [description]",

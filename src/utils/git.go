@@ -3,7 +3,7 @@ package utils
 import (
 	"bytes"
 	"fmt"
-	"io"
+	// "io"
 	"os"
 	"os/exec"
 	"strings"
@@ -20,8 +20,8 @@ func RunGit(hideOutput bool, args ...string) (string, error) {
 		gitCmd.Stdout = &stdout
 		gitCmd.Stderr = &stderr
 	} else {
-		gitCmd.Stdout = io.MultiWriter(os.Stdout, &stdout)
-		gitCmd.Stderr = io.MultiWriter(os.Stderr, &stderr)
+		gitCmd.Stdout = os.Stdout
+		gitCmd.Stderr = os.Stderr
 	}
 
 	err := gitCmd.Run()
