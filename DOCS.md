@@ -36,6 +36,15 @@ Open the pull requests page.
 guh browse pr
 ```
 
+Optionally, add `print` to print the URL instead of opening it.
+
+```
+guh browse issues print
+guh browse pr print
+guh browse print
+```
+
+
 ---
 
 ## `commit`
@@ -200,3 +209,23 @@ guh undo 1             # git reset --soft HEAD~1
 guh undo 2 hard        # git reset --hard HEAD~2
 guh undo 1 mixed       # git reset --mixed HEAD~1
 ```
+
+## `logs`
+Show commit logs.
+
+```
+guh logs [commits]
+```
+
+**Arguments**
+
+| # | Name | Required | Description |
+|---|------|----------|-------------|
+| 1 | commits | no | Number of commits to show (default: all) |
+
+Examples:
+```
+guh logs 5
+```
+
+Equivalent to `git log`.
