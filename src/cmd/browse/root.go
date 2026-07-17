@@ -2,6 +2,7 @@ package browse
 
 import (
 	"strings"
+	"fmt"
 
 	"github.com/daveberrys/guh/src/cmd"
 	"github.com/daveberrys/guh/src/utils"
@@ -16,12 +17,18 @@ func init() {
 }
 
 var createCmd = &cobra.Command{
-	Use:   "browse",
-	Short: "Opens a browser to the repository.",
+	Use:   "browse [print]",
+	Short: "Opens a browser to the repository. If 'print' is true, prints the URL instead.",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		url, err := utils.RunGit(true, "remote", "get-url", "origin")
 		if err != nil { return err }
+
 		url = strings.TrimSuffix(url, ".git")
+		if len(args) > 0 && args[0] == "print" {
+			fmt.Println(url)
+			return nil
+		}
+
 		return browser.OpenURL(url)
 	},
 }
