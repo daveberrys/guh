@@ -1,13 +1,6 @@
 #!/bin/bash
 
 echo "This will install the compiled local 'guh' binary to '~/.local/bin' directory."
-read -p "Do you want to continue? [y/n]: " choice
-
-if [ "$choice" != "Y" ] && [ "$choice" != "y" ]; then
-    echo "Installation cancelled."
-    exit 0
-fi
-
 echo "Installing..."
 echo
 

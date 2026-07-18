@@ -19,7 +19,9 @@ var linkRepoCmd = &cobra.Command{
 		        utils.RunGit(false, "remote", "get-url", "origin")
 		        return nil
 		    default:
-		        utils.RunGitSequence(false, []string{"remote", "set-url", "origin", args[0]})
+				utils.RunGit(true, "remote", "remove", "origin")
+				utils.RunGit(false, "remote", "add", "origin", args[0])
+				
 		        fmt.Printf("Linked repository to: %s\n", args[0])
 		        return nil
 		}
