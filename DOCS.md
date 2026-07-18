@@ -6,6 +6,7 @@ Root command. Prints a welcome message when run without a subcommand.
 
 ```
 guh
+> Welcome to guh! Use --help to see available commands.
 ```
 
 ---
@@ -49,13 +50,17 @@ guh browse print
 
 ## `commit`
 
-Add files and commit changes. Shows `git status --short` before committing.
+Add files and commit changes. Shows `git status --short` before committing. Optionally pushes after commit.
 
 ```
-guh commit                                       # show edited files only
-guh commit "." "message"                         # git add . && commit
-guh commit '["file1", "file2"]' "message"        # add specific files && commit
-guh commit '["file1"]' "message" "description"   # commit with message + description
+guh commit                                                      # show edited files only
+guh commit "." "message"                                        # git add . && commit
+guh commit '["file1", "file2"]' "message"                       # add specific files && commit
+guh commit '["file1"]' "message" "description"                  # commit with message + description
+guh commit '["file1"]' "message" push                           # commit + push to origin
+guh commit '["file1"]' "message" "description" push             # commit + push to origin
+guh commit '["file1"]' "message" push "upstream"                # commit + push to named remote
+guh commit '["file1"]' "message" "description" push "all"       # commit + push to all remotes
 ```
 
 **Arguments**
@@ -65,6 +70,8 @@ guh commit '["file1"]' "message" "description"   # commit with message + descrip
 | 1 | files | yes* | JSON array of files, or `"."` to add everything |
 | 2 | message | yes* | Commit message |
 | 3 | description | no | Optional commit description (uses `-m` twice) |
+| 4 | push | no | Literal `"push"` to trigger a push after commit |
+| 5 | remote | no | Remote name (default `"origin"`; use `"all"` to push to all remotes) |
 
 \*When no arguments are given, shows `git status --short` instead.
 
@@ -92,15 +99,6 @@ guh create account <username> <email> <classicToken> <platform>
 
 Credentials are stored in the user config directory under `dev.pages.codedave.guh/accounts.json`. All four values are required and must be non-empty. `platform` is the Git provider domain (e.g. `github.com`).
 
-### `repo`
-
-Link or view the repository remote origin.
-
-```
-guh create repo <url>     # set origin URL
-guh create repo what      # show current origin URL
-```
-
 ---
 
 ## `diff`
@@ -108,10 +106,11 @@ guh create repo what      # show current origin URL
 Show working tree changes.
 
 ```
-guh diff
+guh diff            # show all working tree changes
+guh diff <file>     # show changes for a specific file
 ```
 
-Equivalent to `git diff`.
+Equivalent to `git diff [file]`.
 
 ---
 
@@ -124,6 +123,34 @@ guh init
 ```
 
 Equivalent to `git init`.
+
+---
+
+## `link`
+
+Show remote URLs or add/remove remotes.
+
+```
+guh link                        # show all remotes (git remote -v)
+guh link add <name> <url>       # add (or replace) a remote
+guh link remove <name>          # remove a remote
+```
+
+### `add`
+
+Set a remote URL. Removes any existing remote with the same name first, then adds it.
+
+```
+guh link add <name> <url>
+```
+
+### `remove`
+
+Remove a remote by name.
+
+```
+guh link remove <name>
+```
 
 ---
 
@@ -141,13 +168,29 @@ Runs `git fetch` followed by `git pull`.
 
 ## `push`
 
-Push local commits.
+Push local commits to a remote.
 
 ```
-guh push
+guh push                    # push to default remote
+guh push <remote>           # push to a named remote
+guh push all                # push to all remotes
 ```
 
-Equivalent to `git push`.
+When `all` is given, pushes to every remote returned by `git remote`.
+
+---
+
+## `rename`
+
+### `branch`
+
+Rename the current branch.
+
+```
+guh rename branch <name>
+```
+
+Equivalent to `git branch -m <name>`.
 
 ---
 
@@ -183,7 +226,7 @@ Switch to a saved GitHub account (updates global git config and credentials).
 guh switch account <username>
 ```
 
-Updates `user.name`, `user.email` in global git config, and overwrites `~/.git-credentials` with the stored token. The account must have been created with `guh create account` first.
+Sets `credential.helper` to `store`, updates `user.name` and `user.email` in global git config, and overwrites `~/.git-credentials` with the stored token. The account must have been created with `guh create account` first.
 
 ---
 
