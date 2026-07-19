@@ -1,5 +1,32 @@
 # guh CLI — Command Reference
 
+## Table of Contents
+
+- [`guh`](#guh)
+- [`account`](#account)
+  - [`account save`](#account-save)
+  - [`account switch`](#account-switch)
+- [`branch`](#branch)
+  - [`branch create`](#branch-create)
+  - [`branch switch`](#branch-switch)
+  - [`branch rename`](#branch-rename)
+- [`browse`](#browse)
+  - [`browse issues`](#browse-issues)
+  - [`browse pr`](#browse-pr)
+- [`commit`](#commit)
+- [`diff`](#diff)
+- [`init`](#init)
+- [`link`](#link)
+  - [`link add`](#link-add)
+  - [`link remove`](#link-remove)
+- [`logs`](#logs)
+- [`pull`](#pull)
+- [`push`](#push)
+- [`stash`](#stash)
+- [`undo`](#undo)
+
+---
+
 ## `guh`
 
 Root command. Prints a welcome message when run without a subcommand.
@@ -8,6 +35,65 @@ Root command. Prints a welcome message when run without a subcommand.
 guh
 > Welcome to guh! Use --help to see available commands.
 ```
+
+---
+
+## `account`
+
+### `account save`
+
+Save a new account with username, email, classic token, and platform.
+
+```
+guh account save <username> <email> <classicToken> <platform>
+```
+
+All four values are required and must be non-empty. `platform` is the Git provider domain (e.g. `github.com`). Credentials are stored in the user config directory under `dev.pages.codedave.guh/accounts.json`.
+
+### `account switch`
+
+Switch to a saved account (updates global git config and credentials).
+
+```
+guh account switch <username>
+```
+
+Sets `credential.helper` to `store`, updates `user.name` and `user.email` in global git config, and overwrites `~/.git-credentials` with the stored token. The account must have been saved with `guh account save` first.
+
+---
+
+## `branch`
+
+### `branch create`
+
+Create and switch to a new branch.
+
+```
+guh branch create <name>
+```
+
+Equivalent to `git switch -c <name>`.
+
+### `branch switch`
+
+Switch to an existing branch, or list branches.
+
+```
+guh branch switch <name>
+guh branch switch list
+```
+
+Equivalent to `git switch <name>`. Using `list` is equivalent to `git branch`.
+
+### `branch rename`
+
+Rename the current branch.
+
+```
+guh branch rename <name>
+```
+
+Equivalent to `git branch -m <name>`.
 
 ---
 
@@ -21,7 +107,7 @@ guh browse
 
 Equivalent to opening the repo URL (without `.git` suffix) in a browser.
 
-### `issues`
+### `browse issues`
 
 Open the issues page.
 
@@ -29,7 +115,7 @@ Open the issues page.
 guh browse issues
 ```
 
-### `pr`
+### `browse pr`
 
 Open the pull requests page.
 
@@ -44,7 +130,6 @@ guh browse issues print
 guh browse pr print
 guh browse print
 ```
-
 
 ---
 
@@ -74,30 +159,6 @@ guh commit '["file1"]' "message" "description" push "all"       # commit + push 
 | 5 | remote | no | Remote name (default `"origin"`; use `"all"` to push to all remotes) |
 
 \*When no arguments are given, shows `git status --short` instead.
-
----
-
-## `create`
-
-### `branch`
-
-Create and switch to a new branch.
-
-```
-guh create branch <branch>
-```
-
-Equivalent to `git switch -c <branch>`.
-
-### `account`
-
-Save a GitHub account with username, email, classic token, and platform.
-
-```
-guh create account <username> <email> <classicToken> <platform>
-```
-
-Credentials are stored in the user config directory under `dev.pages.codedave.guh/accounts.json`. All four values are required and must be non-empty. `platform` is the Git provider domain (e.g. `github.com`).
 
 ---
 
@@ -136,20 +197,43 @@ guh link add <name> <url>       # add (or replace) a remote
 guh link remove <name>          # remove a remote
 ```
 
-### `add`
+### `link add`
 
-Set a remote URL. Removes any existing remote with the same name first, then adds it.
+Set a remote URL. Removes any existing remote with the same name first, then adds it. Requires exactly 2 arguments: remote name and URL.
 
 ```
 guh link add <name> <url>
 ```
 
-### `remove`
+### `link remove`
 
-Remove a remote by name.
+Remove a remote by name. Requires exactly 1 argument: the remote name.
 
 ```
 guh link remove <name>
+```
+
+---
+
+## `logs`
+
+Show commit logs.
+
+```
+guh logs [commits]
+```
+
+**Arguments**
+
+| # | Name | Required | Description |
+|---|------|----------|-------------|
+| 1 | commits | no | Number of commits to show (default: all commits) |
+
+Examples:
+
+```
+guh logs        # git log (full history)
+guh logs 5      # git log -5 (last 5 commits)
 ```
 
 ---
@@ -168,29 +252,21 @@ Runs `git fetch` followed by `git pull`.
 
 ## `push`
 
-Push local commits to a remote.
+Push the current branch to a remote. Uses `-u` to set upstream tracking automatically.
 
 ```
-guh push                    # push to default remote
-guh push <remote>           # push to a named remote
+guh push                    # git push -u origin <current-branch>
+guh push <remote>           # git push -u <remote> <current-branch>
 guh push all                # push to all remotes
 ```
 
-When `all` is given, pushes to every remote returned by `git remote`.
+When `all` is given, pushes to every remote returned by `git remote`. The first remote uses `-u` and the current branch name to set upstream tracking; subsequent remotes are pushed without the `-u` flag.
 
----
+**Arguments**
 
-## `rename`
-
-### `branch`
-
-Rename the current branch.
-
-```
-guh rename branch <name>
-```
-
-Equivalent to `git branch -m <name>`.
+| # | Name | Required | Description |
+|---|------|----------|-------------|
+| 1 | remote | no | Remote name, or `"all"` to push to every remote (default: `"origin"`) |
 
 ---
 
@@ -206,34 +282,9 @@ Equivalent to `git stash`.
 
 ---
 
-## `switch`
-
-### `branch`
-
-Switch to an existing branch.
-
-```
-guh switch branch <name>
-guh switch branch list
-```
-
-Equivalent to `git switch <name>`. Listing all branches is equivalent to `git branch`.
-
-### `account`
-
-Switch to a saved GitHub account (updates global git config and credentials).
-
-```
-guh switch account <username>
-```
-
-Sets `credential.helper` to `store`, updates `user.name` and `user.email` in global git config, and overwrites `~/.git-credentials` with the stored token. The account must have been created with `guh create account` first.
-
----
-
 ## `undo`
 
-Undo local commits using `git reset`.
+Undo local commits using `git reset`. Flavour defaults to `soft` for unrecognized values.
 
 ```
 guh undo <commits> [flavour]
@@ -253,23 +304,3 @@ guh undo 1             # git reset --soft HEAD~1
 guh undo 2 hard        # git reset --hard HEAD~2
 guh undo 1 mixed       # git reset --mixed HEAD~1
 ```
-
-## `logs`
-Show commit logs.
-
-```
-guh logs [commits]
-```
-
-**Arguments**
-
-| # | Name | Required | Description |
-|---|------|----------|-------------|
-| 1 | commits | no | Number of commits to show (default: all) |
-
-Examples:
-```
-guh logs 5
-```
-
-Equivalent to `git log`.

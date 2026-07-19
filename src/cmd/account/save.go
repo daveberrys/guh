@@ -1,4 +1,4 @@
-package createcmd
+package account
 
 import (
 	"fmt"
@@ -8,9 +8,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var createAccountCmd = &cobra.Command{
-	Use:   "account [username] [email] [classicToken] [platform]",
-	Short: "Create or update an account",
+var saveCmd = &cobra.Command{
+	Use:   "save [username] [email] [classicToken] [platform]",
+	Short: "Save a new account",
 	Args:  cobra.ExactArgs(4),
 	RunE: func(c *cobra.Command, args []string) error {
 		account := utils.Account{
@@ -23,7 +23,9 @@ var createAccountCmd = &cobra.Command{
 			return fmt.Errorf("username, email, classicToken, platform are required")
 		}
 
-		if err := utils.UpsertAccount(account); err != nil { return err }
+		if err := utils.UpsertAccount(account); err != nil {
+			return err
+		}
 
 		fmt.Printf("Saved account: %s\n", account.Username)
 		return nil

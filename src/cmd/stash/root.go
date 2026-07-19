@@ -1,17 +1,18 @@
-package cmd
+package stash
 
 import (
+	"github.com/daveberrys/guh/src/cmd"
 	"github.com/daveberrys/guh/src/utils"
 	"github.com/spf13/cobra"
 )
 
-func init() { rootCmd.AddCommand(stashCmd) }
+func init() { cmd.RootCmd.AddCommand(stashCmd) }
 
 var stashCmd = &cobra.Command{
 	Use:   "stash",
 	Short: "Stash current changes",
 	Args:  cobra.NoArgs,
-	RunE: func(cmd *cobra.Command, args []string) error {
+	RunE: func(cobraCmd *cobra.Command, args []string) error {
 		return utils.RunGitSequence(false, []string{"stash"})
 	},
 }

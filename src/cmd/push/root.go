@@ -1,19 +1,20 @@
-package cmd
+package push
 
 import (
 	"strings"
 
+	"github.com/daveberrys/guh/src/cmd"
 	"github.com/daveberrys/guh/src/utils"
 	"github.com/spf13/cobra"
 )
 
-func init() { rootCmd.AddCommand(pushCmd) }
+func init() { cmd.RootCmd.AddCommand(pushCmd) }
 
 var pushCmd = &cobra.Command{
 	Use:   "push [remote]",
 	Short: "Add current changes and push",
 	Args:  cobra.MaximumNArgs(1),
-	RunE: func(cmd *cobra.Command, args []string) error {
+	RunE: func(cobraCmd *cobra.Command, args []string) error {
 		branch, _ := utils.RunGit(true, "rev-parse", "--abbrev-ref", "HEAD")
 
 		if len(args) == 0 {
