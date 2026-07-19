@@ -82,18 +82,18 @@ var commitCmd = &cobra.Command{
 
 		utils.RunGitSequence(false, commitArgs)
 		if afterPush {
+			branch, _ := utils.RunGit(true, "rev-parse", "--abbrev-ref", "HEAD")
 			if remoteName == "all" {
-				remotes, err := utils.RunGit(true, "remote")
-				if err != nil {
-					return err
-				}
-				for _, r := range strings.Fields(remotes) {
-					if err := utils.RunGitSequence(false, []string{"push", r}); err != nil {
-						return err
+				remotes, _ := utils.RunGit(true, "remote")
+				for i, r := range strings.Fields(remotes) {
+					if i == 0 {
+						utils.RunGitSequence(false, []string{"push", "-u", r, branch})
+					} else {
+						utils.RunGitSequence(false, []string{"push", r})
 					}
 				}
 			} else {
-				utils.RunGitSequence(false, []string{"push", remoteName})
+				utils.RunGitSequence(false, []string{"push", "-u", remoteName, branch})
 			}
 		}
 		return nil

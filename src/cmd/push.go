@@ -14,21 +14,22 @@ var pushCmd = &cobra.Command{
 	Short: "Add current changes and push",
 	Args:  cobra.MaximumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		branch, _ := utils.RunGit(true, "rev-parse", "--abbrev-ref", "HEAD")
+
 		if len(args) == 0 {
-			return utils.RunGitSequence(false, []string{"push"})
+			return utils.RunGitSequence(false, []string{"push", "-u", "origin", branch})
 		}
 		if args[0] == "all" {
-			remotes, err := utils.RunGit(true, "remote")
-			if err != nil {
-				return err
-			}
-			for _, r := range strings.Fields(remotes) {
-				if err := utils.RunGitSequence(false, []string{"push", r}); err != nil {
-					return err
+			remotes, _ := utils.RunGit(true, "remote")
+			for i, r := range strings.Fields(remotes) {
+				if i == 0 {
+					utils.RunGitSequence(false, []string{"push", "-u", r, branch})
+				} else {
+					utils.RunGitSequence(false, []string{"push", r})
 				}
 			}
 			return nil
 		}
-		return utils.RunGitSequence(false, []string{"push", args[0]})
+		return utils.RunGitSequence(false, []string{"push", "-u", args[0], branch})
 	},
 }
