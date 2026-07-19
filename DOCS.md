@@ -214,9 +214,10 @@ Switch to an existing branch.
 
 ```
 guh switch branch <name>
+guh switch branch list
 ```
 
-Equivalent to `git switch <name>`.
+Equivalent to `git switch <name>`. Listing all branches is equivalent to `git branch`.
 
 ### `account`
 
