@@ -47,8 +47,15 @@ var commitCmd = &cobra.Command{
 		commitArgs := []string{"commit", "-m", args[1]}
 		afterPush, remoteName := false, "origin"
 
+		// case 1 -> guh commit [files] [message] [desc] push[:optional] [remote_name:optional(origin)]
+		// case 2 -> guh commit [files] [message] [desc] push[:optional]
+		// case 3 -> guh commit [files] [message]        push[:optional] [remote_name:optional(origin)]
+		// case 4 -> guh commit [files] [message]        push[:optional]
+		// case 5 -> guh commit [files] [message] [desc]
+		// case 6 -> guh commit [files] [message]
 		switch len(args) {
 		case 5:
+		        // [files] [message] [desc] push [remote]   (case 1)
 			commitArgs = append(commitArgs, "-m", args[2])
 			afterPush = true
 			if args[4] != "" {
@@ -56,18 +63,22 @@ var commitCmd = &cobra.Command{
 			}
 		case 4:
 			if args[2] == "push" {
+			    // [files] [message] push [remote]          (case 3)
 				afterPush = true
 				if args[3] != "" {
 					remoteName = args[3]
 				}
 			} else {
+			    // [files] [message] [desc] push            (case 2)
 				commitArgs = append(commitArgs, "-m", args[2])
 				afterPush = true
 			}
 		case 3:
 			if args[2] == "push" {
+			    // [files] [message] push                   (case 4)
 				afterPush = true
 			} else {
+			    // [files] [message] [desc]                 (case 5)
 				commitArgs = append(commitArgs, "-m", args[2])
 			}
 		}
