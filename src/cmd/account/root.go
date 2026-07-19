@@ -9,6 +9,7 @@ func init() {
 	cmd.RootCmd.AddCommand(accountCmd)
 	accountCmd.AddCommand(saveCmd)
 	accountCmd.AddCommand(switchCmd)
+	accountCmd.AddCommand(editCmd)
 }
 
 var accountCmd = &cobra.Command{
