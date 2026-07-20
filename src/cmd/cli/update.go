@@ -35,6 +35,7 @@ var updateCmd = &cobra.Command{
 		guhGithubHash := commits[0].Sha[:7]
 
 		if guhGithubHash == Version {
+		    fmt.Println("Already up to date.")
 			return nil
 		}
 

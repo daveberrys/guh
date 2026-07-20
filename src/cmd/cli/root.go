@@ -10,6 +10,7 @@ func init() {
 	cliCmd.AddCommand(updateCmd)
 	cliCmd.AddCommand(versionCmd)
 	cliCmd.AddCommand(installCmd)
+	cliCmd.AddCommand(removeCmd)
 }
 
 var cliCmd = &cobra.Command{
