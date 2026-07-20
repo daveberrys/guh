@@ -15,6 +15,7 @@ import (
 	_ "github.com/daveberrys/guh/src/cmd/stash"
 	_ "github.com/daveberrys/guh/src/cmd/undo"
 	_ "github.com/daveberrys/guh/src/cmd/cli"
+	_ "github.com/daveberrys/guh/src/cmd/clone"
 )
 
 func main() { cmd.Execute() }
