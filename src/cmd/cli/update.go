@@ -101,6 +101,12 @@ func doUpdateSequence() error {
 	os.WriteFile(tmpPath, binData, 0755)
 	os.Rename(tmpPath, exePath)
 
-	fmt.Println("Update successful!")
+	if runtime.GOOS == "windows" {
+		fmt.Println("\nThe update may not take effect due to Windows' permission issue.")
+		fmt.Println("If you wish to update, please run the following command in PowerShell:")
+		fmt.Printf("  move '%s' '%s'\n", tmpPath, exePath)
+	} else {
+		fmt.Println("Update successful!")
+	}
 	return nil
 }
