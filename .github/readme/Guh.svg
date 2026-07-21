@@ -1,0 +1,10 @@
+<svg width="725" height="725" viewBox="0 0 725 725" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M684.479 322.441L401.637 39.598C379.767 17.7286 344.31 17.7286 322.441 39.598L147 215.039L39.598 322.441C17.7286 344.31 17.7286 379.767 39.598 401.637L322.441 684.479C344.31 706.349 379.767 706.349 401.637 684.479L684.479 401.637C706.349 379.767 706.349 344.31 684.479 322.441Z" fill="#F03C2E"/>
+<ellipse cx="49" cy="50" rx="49" ry="50" transform="matrix(4.37114e-08 1 1 -4.37114e-08 313.039 136.039)" fill="white"/>
+<ellipse cx="49" cy="49.5" rx="49" ry="49.5" transform="matrix(4.37114e-08 1 1 -4.37114e-08 313.039 490.039)" fill="white"/>
+<circle cx="49" cy="49" r="49" transform="matrix(4.37114e-08 1 1 -4.37114e-08 166.039 275.039)" fill="white"/>
+<circle cx="509.572" cy="324.129" r="49" transform="rotate(90 509.572 324.129)" fill="white"/>
+<rect width="48.246" height="328.303" transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 387.285 198.039)" fill="white"/>
+<rect width="48.246" height="218.488" transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 396.572 185.063)" fill="white"/>
+<rect x="328.039" y="185.154" width="48.246" height="218.488" transform="rotate(-45 328.039 185.154)" fill="white"/>
+</svg>

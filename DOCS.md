@@ -6,13 +6,21 @@
 - [`account`](#account)
   - [`account save`](#account-save)
   - [`account switch`](#account-switch)
+  - [`account edit`](#account-edit)
 - [`branch`](#branch)
   - [`branch create`](#branch-create)
   - [`branch switch`](#branch-switch)
   - [`branch rename`](#branch-rename)
+  - [`branch delete`](#branch-delete)
 - [`browse`](#browse)
   - [`browse issues`](#browse-issues)
   - [`browse pr`](#browse-pr)
+- [`cli`](#cli)
+  - [`cli install`](#cli-install)
+  - [`cli remove`](#cli-remove)
+  - [`cli update`](#cli-update)
+  - [`cli version`](#cli-version)
+- [`clone`](#clone)
 - [`commit`](#commit)
 - [`diff`](#diff)
 - [`init`](#init)
@@ -60,6 +68,16 @@ guh account switch <username>
 
 Sets `credential.helper` to `store`, updates `user.name` and `user.email` in global git config, and overwrites `~/.git-credentials` with the stored token. The account must have been saved with `guh account save` first.
 
+### `account edit`
+
+Edit accounts.json via the supported code editor
+
+```
+guh account edit
+```
+
+Opens the supported code editor; "nano", "code", "zed", "zeditor", "vi", "vim", "emacs", "notepad.exe"
+
 ---
 
 ## `branch`
@@ -95,6 +113,16 @@ guh branch rename <name>
 
 Equivalent to `git branch -m <name>`.
 
+### `branch delete`
+
+Delete the selected branch.
+
+```
+guh branch delete <branch>
+```
+
+Equivalent to `git branch -D <branch>`.
+
 ---
 
 ## `browse`
@@ -129,6 +157,44 @@ Optionally, add `print` to print the URL instead of opening it.
 guh browse issues print
 guh browse pr print
 guh browse print
+```
+
+---
+
+## `cli`
+
+### `cli install`
+Installs `guh` binary to your system directly with env variable.
+
+```
+guh cli install
+```
+
+### `cli remove`
+Deletes `guh` binary in your system with the env variable.
+
+```
+guh cli remove
+```
+
+> [!WARNING]
+> Windows' permission issue may cause it to not delete. We have provided a command for you to delete through the terminal for you to run. We can't do anything about it because of *cough* windows
+
+### `cli update`
+Updates `guh` binary in your system.
+
+```
+guh cli update
+```
+
+> [!WARNING]
+> Windows' permission issue may cause it to not update. We have provided a command for you to update through the terminal for you to run. We can't do anything about it because of *cough* windows
+
+### `cli version`
+Shows your `guh` binary hash[:7] version through git's commit.
+
+```
+guh cli version
 ```
 
 ---
