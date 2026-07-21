@@ -11,7 +11,7 @@ import (
 func init() { cmd.RootCmd.AddCommand(pushCmd) }
 
 var pushCmd = &cobra.Command{
-	Use:   "push [remote]",
+	Use:   "push [remote:opt]",
 	Short: "Add current changes and push",
 	Args:  cobra.MaximumNArgs(1),
 	RunE: func(cobraCmd *cobra.Command, args []string) error {

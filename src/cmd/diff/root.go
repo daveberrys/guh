@@ -9,7 +9,7 @@ import (
 func init() { cmd.RootCmd.AddCommand(diffCmd) }
 
 var diffCmd = &cobra.Command{
-	Use:   "diff [file:optional]",
+	Use:   "diff [file:opt]",
 	Short: "Show working tree changes",
 	Args:  cobra.MaximumNArgs(1),
 	RunE: func(cobraCmd *cobra.Command, args []string) error {

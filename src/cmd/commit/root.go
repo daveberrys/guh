@@ -13,7 +13,7 @@ import (
 func init() { cmd.RootCmd.AddCommand(commitCmd) }
 
 var commitCmd = &cobra.Command{
-	Use:   "commit [files] [message] [description]",
+	Use:   "commit [files] [message] [description:opt]/push:opt [push:opt] [remote_name:opt]",
 	Short: "Add specified files and commit",
 	Args:  cobra.RangeArgs(0, 5),
 	RunE: func(cobraCmd *cobra.Command, args []string) error {
@@ -47,10 +47,10 @@ var commitCmd = &cobra.Command{
 		commitArgs := []string{"commit", "-m", args[1]}
 		afterPush, remoteName := false, "origin"
 
-		// case 1 -> guh commit [files] [message] [desc] push[:optional] [remote_name:optional(origin)]
-		// case 2 -> guh commit [files] [message] [desc] push[:optional]
-		// case 3 -> guh commit [files] [message]        push[:optional] [remote_name:optional(origin)]
-		// case 4 -> guh commit [files] [message]        push[:optional]
+		// case 1 -> guh commit [files] [message] [desc] push[:opt] [remote_name:opt(origin)]
+		// case 2 -> guh commit [files] [message] [desc] push[:opt]
+		// case 3 -> guh commit [files] [message]        push[:opt] [remote_name:opt(origin)]
+		// case 4 -> guh commit [files] [message]        push[:opt]
 		// case 5 -> guh commit [files] [message] [desc]
 		// case 6 -> guh commit [files] [message]
 		switch len(args) {

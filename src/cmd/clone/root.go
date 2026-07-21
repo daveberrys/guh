@@ -14,7 +14,7 @@ import (
 func init() { cmd.RootCmd.AddCommand(cloneCmd) }
 
 var cloneCmd = &cobra.Command{
-	Use:   "clone",
+	Use:   "clone [repository_url]",
 	Short: "Clone a repository",
 	Args:  cobra.MinimumNArgs(1),
 	RunE: func(cobraCmd *cobra.Command, args []string) error {
