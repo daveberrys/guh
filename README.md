@@ -1,12 +1,9 @@
-<div style="display: flex; gap: 15px;">
-    <div>
-        <img src=".github/readme/Guh.svg" width="128" height="128" alt="Guh">
-    </div>
-    <div>
-        <h1 style="color: #F03C2E;"> GUH (Git Utility(For) Helper(Noobs)) </h1>
-        <span>Want to use the Git CLI and don't want to use the GitHub Desktop because you're "too cool"? But you don't know how to even use the git CLI? We've got you covered.</span>
-    </div>
-</div>
+<table>
+    <tr>
+        <th><img src=".github/readme/Guh.svg" width="256" height="256" alt="Guh"></th>
+        <th><h1>GUH (Git Utility(For) Helper(Noobs))</h1>Want to use the Git CLI and don't want to use the GitHub Desktop because you're "too cool"? But you don't know how to even use the git CLI? We've got you covered.</th>
+    </tr>
+</table>
 
 ---
 
