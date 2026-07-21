@@ -199,6 +199,16 @@ guh cli version
 
 ---
 
+## `clone`
+
+Clones a github repository and spawns a nested shell inside the directory, automatically putting you in there.
+
+```
+guh clone <url>
+```
+
+---
+
 ## `commit`
 
 Add files and commit changes. Shows `git status --short` before committing. Optionally pushes after commit.
