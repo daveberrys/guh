@@ -42,3 +42,6 @@ go build
 
 # LICENSE
 [MIT License](LICENSE)
+
+# FOR AGENTS
+Please refer to the [AGENTS.md](AGENTS.md). Do not neglect this file.
