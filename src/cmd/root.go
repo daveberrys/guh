@@ -9,10 +9,14 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:   "guh",
-	Short: "Guh is a modular CLI tool",
-	Long:  `A comprehensive CLI tool built with Go and Cobra to demonstrate multi-command structures.`,
+	Short: "Git wrapper without remembering.",
+	Long:  `Git wrapper for people who wants to use git without remembering all the commands.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Welcome to guh! Use --help to see available commands.")
+		fmt.Println("This is guh! Run `guh --help` for all available commands.")
+		fmt.Println("  Alternativly, you can visit here; https://github.com/daveberrys/guh/blob/main/DOCS.md")
+		fmt.Println("")
+		fmt.Println("If you want to contribute, please visit here; https://github.com/daveberrys/guh")
+		fmt.Println("Any contributions helps! As long as you follow the contribution guidelines, you are welcome to contribute!")
 	},
 }
 
