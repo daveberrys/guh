@@ -17,7 +17,7 @@ func init() {
 
 var linkCmd = &cobra.Command{
 	Use:   "link",
-	Short: "Link repositories. Shows all linked repositories",
+	Short: "Link repositories. Shows all linked repositories - No args given, lists all remotes.",
 	RunE: func(c *cobra.Command, args []string) error {
 		utils.RunGit(false, "remote", "-v")
 		return nil

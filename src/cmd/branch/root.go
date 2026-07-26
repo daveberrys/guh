@@ -5,6 +5,7 @@ package branch
 
 import (
 	"github.com/daveberrys/guh/src/cmd"
+	"github.com/daveberrys/guh/src/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -18,5 +19,8 @@ func init() {
 
 var branchCmd = &cobra.Command{
 	Use:   "branch",
-	Short: "Manage branches",
+	Short: "Manage branches - No args given, lists all branches",
+	Run: func(c *cobra.Command, args []string) {
+		utils.RunGit(false, "branch")
+	},
 }
