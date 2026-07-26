@@ -82,6 +82,14 @@ Opens the supported code editor; "nano", "code", "zed", "zeditor", "vi", "vim", 
 
 ## `branch`
 
+No args given, lists all branches.
+
+```
+guh branch
+```
+
+Equivalent to `git branch`.
+
 ### `branch create`
 
 Create and switch to a new branch.
@@ -94,14 +102,13 @@ Equivalent to `git switch -c <name>`.
 
 ### `branch switch`
 
-Switch to an existing branch, or list branches.
+Switch to an existing branch.
 
 ```
 guh branch switch <name>
-guh branch switch list
 ```
 
-Equivalent to `git switch <name>`. Using `list` is equivalent to `git branch`.
+Equivalent to `git switch <name>`.
 
 ### `branch rename`
 
