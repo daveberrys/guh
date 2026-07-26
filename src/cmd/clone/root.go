@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"runtime"
 
 	"github.com/daveberrys/guh/src/cmd"
 	"github.com/daveberrys/guh/src/utils"
@@ -30,7 +31,22 @@ var cloneCmd = &cobra.Command{
 		repoName = strings.TrimSuffix(repoName, ".git")
 
 		shell := os.Getenv("SHELL")
-		if shell == "" { shell = "sh" }
+		if shell == "" {
+		    fmt.Println("")
+		    if runtime.GOOS != "windows" {
+				fmt.Println("We couldn't find your shell! Defaulting to `sh`.")
+				shell = "sh"
+		    } else {
+			    fmt.Println("Windows being windows, it doesn't export the current shell.")
+			    fmt.Println("Defaulting to `powershell` or `cmd`.")
+			    for _, s := range []string{"powershell", "cmd"} {
+			        if _, err := exec.LookPath(s); err == nil {
+			            shell = s
+			            break
+			        }
+			    }
+			}
+		}
 
 		fmt.Println("")
 		fmt.Printf("Spawning in a new shell: %s\n", shell)
