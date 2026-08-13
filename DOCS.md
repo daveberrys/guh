@@ -341,9 +341,11 @@ Push the current branch to a remote. Uses `-u` to set upstream tracking automati
 guh push                    # git push -u origin <current-branch>
 guh push <remote>           # git push -u <remote> <current-branch>
 guh push all                # push to all remotes
+guh push force              # git push -u --force origin <current-branch>
+guh push force <remote>     # git push -u --force <remote> <current-branch>
 ```
 
-When `all` is given, pushes to every remote returned by `git remote`. The first remote uses `-u` and the current branch name to set upstream tracking; subsequent remotes are pushed without the `-u` flag.
+When `all` is given, pushes to every remote returned by `git remote`. The first remote uses `-u` and the current branch name to set upstream tracking; subsequent remotes are pushed without the `-u` flag. Adding `force` anywhere in the arguments forces the push, overwriting the remote ref despite non-fast-forward changes.
 
 **Arguments**
 
