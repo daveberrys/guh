@@ -15,7 +15,7 @@ import (
 func init() { cmd.RootCmd.AddCommand(pushCmd) }
 
 var pushCmd = &cobra.Command{
-	Use:   "push [force:opt] [remote:opt] [signoff:opt]",
+	Use:   "push [force:opt] [remote:opt]",
 	Short: "Add current changes and push",
 	Args:  cobra.MaximumNArgs(2),
 	RunE: func(cobraCmd *cobra.Command, args []string) error {
@@ -36,24 +36,24 @@ var pushCmd = &cobra.Command{
 			remotes, _ := utils.RunGit(true, "remote")
 			for i, r := range strings.Fields(remotes) {
 				if i == 0 {
-					utils.RunGitSequence(false, pushArgs(force, signoff, "-u", r, branch))
+					utils.RunGitSequence(false, pushArgs(force, "-u", r, branch))
 				} else {
-					utils.RunGitSequence(false, pushArgs(force, signoff, r))
+					utils.RunGitSequence(false, pushArgs(force, r))
 				}
 			}
 			return nil
 		}
 		if remote == "" {
-			return utils.RunGitSequence(false, pushArgs(force, signoff, "-u", "origin", branch))
+			return utils.RunGitSequence(false, pushArgs(force, "-u", "origin", branch))
 		}
-		return utils.RunGitSequence(false, pushArgs(force, signoff, "-u", remote, branch))
+		return utils.RunGitSequence(false, pushArgs(force, "-u", remote, branch))
 	},
 }
 
 func pushArgs(force bool, tail ...string) []string {
-    args := []string{"push"}
-    if force {
-        args = append(args, "--force")
-    }
-    return append(args, tail...)
+	args := []string{"push"}
+	if force {
+		args = append(args, "--force")
+	}
+	return append(args, tail...)
 }

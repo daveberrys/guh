@@ -30,6 +30,7 @@
 - [`logs`](#logs)
 - [`pull`](#pull)
 - [`push`](#push)
+- [`signoff`](#signoff)
 - [`stash`](#stash)
 - [`undo`](#undo)
 
@@ -357,6 +358,29 @@ When `all` is given, pushes to every remote returned by `git remote`. The first 
 | # | Name | Required | Description |
 |---|------|----------|-------------|
 | 1 | remote | no | Remote name, or `"all"` to push to every remote (default: `"origin"`) |
+
+---
+
+## `signoff`
+
+Configure Git to sign commits with an SSH key.
+
+```
+guh signoff
+```
+
+Creates an ed25519 SSH key at `~/.ssh/id_ed25519` if one does not already exist, then configures Git with:
+
+```
+git config --global gpg.format ssh
+git config --global user.signingkey ~/.ssh/id_ed25519.pub
+git config --global commit.gpgsign true
+```
+
+If `~/.ssh/id_ed25519.pub` already exists and its comment matches your Git `user.email`, key generation is skipped and the existing key is reused. The command prints the public key so you can copy it, then opens `https://github.com/settings/ssh/new` in your browser.
+
+> [!IMPORTANT]
+> Add the key to GitHub as a **Signing Key**, not an **Authentication Key**.
 
 ---
 
