@@ -17,16 +17,14 @@ func init() { cmd.RootCmd.AddCommand(pushCmd) }
 var pushCmd = &cobra.Command{
 	Use:   "push [force:opt] [remote:opt] [signoff:opt]",
 	Short: "Add current changes and push",
-	Args:  cobra.MaximumNArgs(3),
+	Args:  cobra.MaximumNArgs(2),
 	RunE: func(cobraCmd *cobra.Command, args []string) error {
 		branch, _ := utils.RunGit(true, "rev-parse", "--abbrev-ref", "HEAD")
 
-		force, remote, signoff := false, "", false
+		force, remote := false, ""
 		for _, arg := range args {
 			if arg == "force" {
 				force = true
-			} else if arg == "" {
-			    signoff = true
 			} else if remote == "" {
 				remote = arg
 			} else {
@@ -52,13 +50,10 @@ var pushCmd = &cobra.Command{
 	},
 }
 
-func pushArgs(force, signoff bool, tail ...string) []string {
+func pushArgs(force bool, tail ...string) []string {
     args := []string{"push"}
     if force {
         args = append(args, "--force")
-    }
-    if signoff {
-        args = append(args, "--signoff")
     }
     return append(args, tail...)
 }
