@@ -218,17 +218,21 @@ guh clone <url>
 
 ## `commit`
 
-Add files and commit changes. Shows `git status --short` before committing. Optionally pushes after commit.
+Add files and commit changes. Shows `git status --short` before committing. Optionally pushes after commit and/or adds a `Signed-off-by` trailer.
 
 ```
 guh commit                                                      # show edited files only
 guh commit "." "message"                                        # git add . && commit
 guh commit '["file1", "file2"]' "message"                       # add specific files && commit
 guh commit '["file1"]' "message" "description"                  # commit with message + description
+guh commit '["file1"]' "message" signoff                        # commit with signoff
+guh commit '["file1"]' "message" "description" signoff          # commit with description + signoff
 guh commit '["file1"]' "message" push                           # commit + push to origin
 guh commit '["file1"]' "message" "description" push             # commit + push to origin
+guh commit '["file1"]' "message" push signoff                   # commit + push to origin + signoff
 guh commit '["file1"]' "message" push "upstream"                # commit + push to named remote
 guh commit '["file1"]' "message" "description" push "all"       # commit + push to all remotes
+guh commit '["file1"]' "message" push "origin" signoff          # commit + push to origin + signoff
 ```
 
 **Arguments**
@@ -237,9 +241,10 @@ guh commit '["file1"]' "message" "description" push "all"       # commit + push 
 |---|------|----------|-------------|
 | 1 | files | yes* | JSON array of files, or `"."` to add everything |
 | 2 | message | yes* | Commit message |
-| 3 | description | no | Optional commit description (uses `-m` twice) |
-| 4 | push | no | Literal `"push"` to trigger a push after commit |
-| 5 | remote | no | Remote name (default `"origin"`; use `"all"` to push to all remotes) |
+| 3 | description | no | Optional commit description (uses `-m` twice), or `"push"`/`"signoff"` |
+| 4 | push | no | Literal `"push"` to trigger a push after commit, or `"signoff"` |
+| 5 | remote | no | Remote name (default `"origin"`; use `"all"` to push to all remotes), or `"signoff"` |
+| 6 | signoff | no | Literal `"signoff"` to add a `Signed-off-by` trailer |
 
 \*When no arguments are given, shows `git status --short` instead.
 

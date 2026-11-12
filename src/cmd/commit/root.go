@@ -16,9 +16,9 @@ import (
 func init() { cmd.RootCmd.AddCommand(commitCmd) }
 
 var commitCmd = &cobra.Command{
-	Use:   "commit [files] [message] [description:opt]/push:opt [push:opt] [remote_name:opt]",
+	Use:   "commit [files] [message] [description:opt]/push:opt/signoff:opt [push:opt]/signoff:opt [remote_name:opt] [signoff:opt]",
 	Short: "Add specified files and commit",
-	Args:  cobra.RangeArgs(0, 5),
+	Args:  cobra.RangeArgs(0, 6),
 	RunE: func(cobraCmd *cobra.Command, args []string) error {
 		if len(args) == 0 {
 			return utils.RunGitSequence(false, []string{"status", "--short"})
@@ -48,42 +48,39 @@ var commitCmd = &cobra.Command{
 		utils.RunGitSequence(false, addArgs)
 
 		commitArgs := []string{"commit", "-m", args[1]}
-		afterPush, remoteName := false, "origin"
+		afterPush, signoff, remoteName := false, false, "origin"
+		remoteSet := false
 
-		// case 1 -> guh commit [files] [message] [desc] push[:opt] [remote_name:opt(origin)]
-		// case 2 -> guh commit [files] [message] [desc] push[:opt]
-		// case 3 -> guh commit [files] [message]        push[:opt] [remote_name:opt(origin)]
-		// case 4 -> guh commit [files] [message]        push[:opt]
-		// case 5 -> guh commit [files] [message] [desc]
-		// case 6 -> guh commit [files] [message]
-		switch len(args) {
-		case 5:
-		        // [files] [message] [desc] push [remote]   (case 1)
-			commitArgs = append(commitArgs, "-m", args[2])
-			afterPush = true
-			if args[4] != "" {
-				remoteName = args[4]
-			}
-		case 4:
-			if args[2] == "push" {
-			    // [files] [message] push [remote]          (case 3)
+		// The third argument is either a description or an action keyword.
+		rest := args[2:]
+		if len(rest) > 0 && rest[0] != "push" && rest[0] != "signoff" {
+			commitArgs = append(commitArgs, "-m", rest[0])
+			rest = rest[1:]
+		}
+
+		// case 1 -> guh commit [files] [message] [desc] push[:opt] [remote_name:opt(origin)] [signoff:opt]
+		// case 2 -> guh commit [files] [message] [desc] push[:opt] [signoff:opt]
+		// case 3 -> guh commit [files] [message]        push[:opt] [remote_name:opt(origin)] [signoff:opt]
+		// case 4 -> guh commit [files] [message]        push[:opt] [signoff:opt]
+		// case 5 -> guh commit [files] [message] [desc] [signoff:opt]
+		// case 6 -> guh commit [files] [message] [signoff:opt]
+		for _, arg := range rest {
+			switch {
+			case arg == "push":
 				afterPush = true
-				if args[3] != "" {
-					remoteName = args[3]
-				}
-			} else {
-			    // [files] [message] [desc] push            (case 2)
-				commitArgs = append(commitArgs, "-m", args[2])
-				afterPush = true
+			case arg == "signoff":
+				signoff = true
+			case arg == "":
+				// ignore empty optional arguments
+			case !remoteSet:
+				remoteName, remoteSet = arg, true
+			default:
+				return fmt.Errorf("unexpected argument %q", arg)
 			}
-		case 3:
-			if args[2] == "push" {
-			    // [files] [message] push                   (case 4)
-				afterPush = true
-			} else {
-			    // [files] [message] [desc]                 (case 5)
-				commitArgs = append(commitArgs, "-m", args[2])
-			}
+		}
+
+		if signoff {
+			commitArgs = append(commitArgs, "--signoff")
 		}
 
 		utils.RunGitSequence(false, commitArgs)
